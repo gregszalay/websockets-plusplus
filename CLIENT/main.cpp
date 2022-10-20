@@ -1,11 +1,40 @@
-#include "include/HELLO/Hello.h"
-#include <WS_CORE/include/SERVERSTUFF/ServerStuff.h>
+#include <boost/asio.hpp>
+#include <iostream>
+
+using boost::asio::ip::tcp;
 
 int main(int argc, char *argv[])
 {
-    Hello hi;
-    hi.print();
-    ServerStuff stuff;
-    stuff.print();
-    return 0;
+    try
+    {
+        boost::asio::io_context io_ctx;
+
+        tcp::resolver resolver{io_ctx};
+
+        auto endpoints = resolver.resolve("127.0.0.1", "1337");
+
+        tcp::socket socket{io_ctx};
+        boost::asio::connect(socket, endpoints);
+
+        while (true)
+        {
+            std::array<char, 128> buf;
+            boost::system::error_code error;
+
+            size_t len = socket.read_some(boost::asio::buffer(buf), error);
+
+            if (error == boost::asio::error::eof)
+            {
+                break;
+            }
+            else
+                throw boost::system::system_error(error);
+
+            std::cout.write(buf.data(), len);
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
