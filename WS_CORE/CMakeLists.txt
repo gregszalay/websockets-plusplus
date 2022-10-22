@@ -14,6 +14,8 @@ add_library(ws_core_library STATIC
     "include/HELLO/Hello.cpp"
     "include/SERVERSTUFF/ServerStuff.cpp"
     "include/BASE/Base.cpp"
+    "include/SERVER/TCPServer.cpp"
+    "include/SERVER/TCPConnection.cpp"
 )
 target_include_directories(ws_core_library
     PUBLIC

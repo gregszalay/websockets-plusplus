@@ -27,8 +27,10 @@ int main(int argc, char *argv[])
             {
                 break;
             }
-            else
+            else if(error)
+            {
                 throw boost::system::system_error(error);
+            }
 
             std::cout.write(buf.data(), len);
         }

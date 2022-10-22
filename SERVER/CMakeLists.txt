@@ -9,7 +9,8 @@ get_filename_component(PARENT_DIR ../ ABSOLUTE)
 # This is how the compiler can find and link the definitions in the cpp files
 add_library(ws_server_library STATIC
     "include/HELLO/Hello.cpp"
-    ${PARENT_DIR}/WS_CORE/include/SERVERSTUFF/ServerStuff.cpp
+    ${PARENT_DIR}/WS_CORE/include/SERVER/TCPServer.cpp
+    ${PARENT_DIR}/WS_CORE/include/SERVER/TCPConnection.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
